@@ -34,17 +34,16 @@ jobs:
 
   # === 2. JOB DEPLOY (CONTINUOUS DEPLOYMENT) ===
   deploy:
-    name: Deploy to Server
+    name: Deploy to Local Server
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     # Chỉ chạy deploy khi code được push vào nhánh main
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
 
     steps:
-      - name: 🚀 Deploy step (Mock)
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🚀 Run Docker Compose
         run: |
-          echo "==== ĐÂY LÀ BƯỚC CD (DEPLOY) ===="
-          echo "Sau này nếu bạn có Máy chủ (VPS), bạn sẽ gắn biến môi trường (Secrets) vào GitHub:"
-          echo "Ví dụ lệnh SSH vào server để tự động pull code và restart Docker:"
-          echo "ssh user@your_vps_ip 'cd exam-quiz-system-main && git pull && docker-compose up -d --build'"
-          echo "================================="
+          sudo docker-compose up -d --build
