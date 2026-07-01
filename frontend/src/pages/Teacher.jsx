@@ -56,7 +56,7 @@ export function ExamStats({ token, examId, onClose }) {
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "ThongKeDiem");
-    XLSX.writeFile(workbook, `KetQua_De_${examId.slice(0,5)}.xlsx`);
+    XLSX.writeFile(workbook, `KetQua_De_${examId.slice(0, 5)}.xlsx`);
   };
 
   if (!st) return <div style={{ padding: '20px', textAlign: 'center' }}>Đang tải...</div>;
@@ -166,29 +166,29 @@ export function ExamManager({ token, me }) {
   return (
     <div className="card" style={{ padding: '20px' }}>
       {view === 'stats' ? <ExamStats token={token} examId={id} onClose={() => setView('list')} /> :
-       view === 'edit' ? <ExamQuestionEditor token={token} examId={id} onClose={() => setView('list')} /> :
-       <table className="history-table" style={{ width: '100%' }}>
-         <thead><tr><th>TÊN ĐỀ</th><th>MÔN</th><th style={{ textAlign: 'center' }}>HÀNH ĐỘNG</th></tr></thead>
-         <tbody>
-           {exams.map(ex => (
-             <tr key={ex.id}>
-               <td><strong>{ex.title}</strong></td><td>{ex.subject}</td>
-               <td style={{ textAlign: 'center' }}>
-                 <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }}>
-                    <button className="btn-primary" style={{ background: '#10b981', padding: '5px 10px' }} onClick={() => { setId(ex.id); setView('stats'); }}>📊 Thống kê</button>
-                    
-                    {/* ✅ CHỈ GIÁO VIÊN MỚI THẤY NÚT SỬA */}
-                    {!isAdmin && (
-                      <button className="btn-primary" style={{ background: '#3b82f6', padding: '5px 10px' }} onClick={() => { setId(ex.id); setView('edit'); }}>✏️ Sửa câu</button>
-                    )}
+        view === 'edit' ? <ExamQuestionEditor token={token} examId={id} onClose={() => setView('list')} /> :
+          <table className="history-table" style={{ width: '100%' }}>
+            <thead><tr><th>TÊN ĐỀ</th><th>MÔN</th><th style={{ textAlign: 'center' }}>HÀNH ĐỘNG</th></tr></thead>
+            <tbody>
+              {exams.map(ex => (
+                <tr key={ex.id}>
+                  <td><strong>{ex.title}</strong></td><td>{ex.subject}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <div style={{ display: 'flex', gap: '5px', justifyContent: 'center' }}>
+                      <button className="btn-primary" style={{ background: '#10b981', padding: '5px 10px' }} onClick={() => { setId(ex.id); setView('stats'); }}>📊 Thống kê</button>
 
-                    <button className="btn-primary" style={{ background: '#ef4444', padding: '5px 10px' }} onClick={async () => { if(window.confirm("Xóa đề?")) { await axios.delete(`${API}/exams/${ex.id}`, { headers: { Authorization: "Bearer " + token } }); load(); } }}>🗑️ Xóa</button>
-                 </div>
-               </td>
-             </tr>
-           ))}
-         </tbody>
-       </table>
+                      {/* ✅ CHỈ GIÁO VIÊN MỚI THẤY NÚT SỬA */}
+                      {!isAdmin && (
+                        <button className="btn-primary" style={{ background: '#3b82f6', padding: '5px 10px' }} onClick={() => { setId(ex.id); setView('edit'); }}>✏️ Sửa câu</button>
+                      )}
+
+                      <button className="btn-primary" style={{ background: '#ef4444', padding: '5px 10px' }} onClick={async () => { if (window.confirm("Xóa đề?")) { await axios.delete(`${API}/exams/${ex.id}`, { headers: { Authorization: "Bearer " + token } }); load(); } }}>🗑️ Xóa</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
       }
     </div>
   );
@@ -227,17 +227,17 @@ export function TeacherPanel({ token, me, refresh }) {
 
         {/* ✅ Ô SETUP THỜI GIAN LÀM BÀI ĐÃ ĐƯỢC PHỤC HỒI TẠI ĐÂY */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-           <input type="number" className="login-input" style={{ width: '80px', margin: 0, textAlign: 'center' }} value={form.duration} onChange={e => setForm({...form, duration: e.target.value})} />
-           <span style={{ fontSize: '13px', color: '#666', whiteSpace: 'nowrap' }}>phút</span>
+          <input type="number" className="login-input" style={{ width: '80px', margin: 0, textAlign: 'center' }} value={form.duration} onChange={e => setForm({ ...form, duration: e.target.value })} />
+          <span style={{ fontSize: '13px', color: '#666', whiteSpace: 'nowrap' }}>phút</span>
         </div>
 
         <button className="btn-primary" style={{ margin: 0, whiteSpace: 'nowrap' }} onClick={handleSave}>Lưu đề</button>
       </div>
-      
+
       {form.subject && (
         <div style={{ background: '#f8fafc', padding: '15px', borderRadius: '10px' }}>
           <div style={{ marginBottom: '10px' }}>
-            🎲 Lấy ngẫu nhiên <input type="number" style={{ width: '50px' }} value={rand} onChange={e => setRand(e.target.value)} /> câu 
+            🎲 Lấy ngẫu nhiên <input type="number" style={{ width: '50px' }} value={rand} onChange={e => setRand(e.target.value)} /> câu
             <button className="btn-outline" onClick={() => setSelected(bank.sort(() => 0.5 - Math.random()).slice(0, rand).map(q => q.id))} style={{ marginLeft: '10px', padding: '5px 15px' }}>Thực hiện</button>
           </div>
           <div style={{ maxHeight: '300px', overflowY: 'auto', marginTop: '10px' }}>
@@ -283,13 +283,13 @@ export function QuestionBankManager({ token }) {
       if (line.match(/^(Câu\s*\d+:|Question\s*\d+:|^\d+\.)/i)) {
         if (current) parsed.push(current);
         let text = line.replace(/^(Câu\s*\d+:|Question\s*\d+:|^\d+\.)\s*/i, '');
-        
+
         // 🔥 Cắt bỏ phần đáp án bị dính vào câu hỏi (Ví dụ: " A. ")
         const optionPos = text.search(/\s+[A-D][\.\)]/);
         if (optionPos !== -1) { text = text.substring(0, optionPos).trim(); }
 
         current = { text, options: [] };
-      } 
+      }
       // 2. Nhận diện các Option A, B, C, D
       else if (current && line.match(/^[A-D][\.\)]/)) {
         current.options.push({ code: line[0].toUpperCase(), text: line.substring(2).trim(), is_correct: false });
@@ -337,7 +337,7 @@ export function QuestionBankManager({ token }) {
     <div style={{ display: 'flex', gap: '20px' }}>
       <div className="card" style={{ flex: 1, padding: '20px', background: '#fff', border: editId ? '2px solid #fbbf24' : '1px solid #eee' }}>
         <h3>{editId ? "📝 Sửa câu hỏi" : "➕ Thêm mới"}</h3>
-        
+
         {/* Phần chọn môn và nhập môn mới */}
         <div style={{ display: 'flex', gap: '5px', marginBottom: '10px' }}>
           <select className="login-input" style={{ flex: 1, margin: 0 }} value={selectedSub} onChange={e => setSelectedSub(e.target.value)}>
@@ -356,7 +356,7 @@ export function QuestionBankManager({ token }) {
         ))}
         <button className="btn-primary" style={{ width: '100%', marginTop: '10px' }} onClick={handleSave}>💾 Lưu câu hỏi</button>
         {editId && <button className="btn-outline" style={{ width: '100%', marginTop: '5px' }} onClick={() => { setEditId(null); setQText(""); setOpts(["", "", "", ""]); }}>Hủy sửa</button>}
-        
+
         <div style={{ marginTop: '20px', border: '1px dashed #3b82f6', padding: '15px', textAlign: 'center', borderRadius: '8px' }}>
           <p style={{ color: '#3b82f6', fontWeight: 'bold' }}>📄 Import Word (.docx)</p>
           <input type="file" accept=".docx" onChange={handleImport} />
@@ -373,7 +373,7 @@ export function QuestionBankManager({ token }) {
             </div>
             <p><strong>Câu {idx + 1}:</strong> {q.text}</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px', fontSize: '13px' }}>
-                {q.options?.map(o => <span key={o.id} style={{ color: o.is_correct ? '#10b981' : '#64748b', fontWeight: o.is_correct ? 'bold' : 'normal' }}>{o.code}. {o.text} {o.is_correct && '✅'}</span>)}
+              {q.options?.map(o => <span key={o.id} style={{ color: o.is_correct ? '#10b981' : '#64748b', fontWeight: o.is_correct ? 'bold' : 'normal' }}>{o.code}. {o.text} {o.is_correct && '✅'}</span>)}
             </div>
           </div>
         ))}
