@@ -40,10 +40,10 @@ function Login({ onLogin, onSwitchRegister }) {
   return (
     <div className="login-container">
       <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Welcome Back (TEST CI/CD)</h2>
+        <h2>Welcome Back</h2>
         <input className="login-input" placeholder="Tên đăng nhập hoặc email" value={u} onChange={e => setU(e.target.value)} required />
         <input className="login-input" type="password" placeholder="Mật khẩu" value={p} onChange={e => setP(e.target.value)} required />
-        
+
         <div className="login-options">
           <label className="remember-me">
             <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
@@ -92,8 +92,8 @@ function Register({ onSwitch }) {
     e.preventDefault();
     if (form.p !== form.cp) return setError("Mật khẩu xác nhận không khớp!");
     try {
-      await axios.post(`${API}/auth/register`, { 
-        username: form.u, password: form.p, email: form.email, full_name: form.fn 
+      await axios.post(`${API}/auth/register`, {
+        username: form.u, password: form.p, email: form.email, full_name: form.fn
       });
       alert("Đăng ký thành công!"); onSwitch();
     } catch (err) { setError("Lỗi đăng ký!"); }
@@ -103,11 +103,11 @@ function Register({ onSwitch }) {
     <div className="login-container">
       <form className="login-card" onSubmit={handleSubmit}>
         <h2>Tạo tài khoản mới</h2>
-        <input className="login-input" placeholder="Tên đăng nhập" onChange={e => setForm({...form, u: e.target.value})} required />
-        <input className="login-input" placeholder="Họ và tên thực (VD: Bùi Nam Khánh)" onChange={e => setForm({...form, fn: e.target.value})} required />
-        <input className="login-input" type="email" placeholder="Email" onChange={e => setForm({...form, email: e.target.value})} required />
-        <input className="login-input" type="password" placeholder="Mật khẩu" onChange={e => setForm({...form, p: e.target.value})} required />
-        <input className="login-input" type="password" placeholder="Xác nhận mật khẩu" onChange={e => setForm({...form, cp: e.target.value})} required />
+        <input className="login-input" placeholder="Tên đăng nhập" onChange={e => setForm({ ...form, u: e.target.value })} required />
+        <input className="login-input" placeholder="Họ và tên thực (VD: Bùi Nam Khánh)" onChange={e => setForm({ ...form, fn: e.target.value })} required />
+        <input className="login-input" type="email" placeholder="Email" onChange={e => setForm({ ...form, email: e.target.value })} required />
+        <input className="login-input" type="password" placeholder="Mật khẩu" onChange={e => setForm({ ...form, p: e.target.value })} required />
+        <input className="login-input" type="password" placeholder="Xác nhận mật khẩu" onChange={e => setForm({ ...form, cp: e.target.value })} required />
         {error && <div style={{ color: 'red', marginBottom: 10 }}>{error}</div>}
         <button type="submit" className="btn-primary login-btn">Đăng ký ngay</button>
         <p style={{ marginTop: '15px', textAlign: 'center' }}>Đã có tài khoản? <span style={{ color: '#4f46e5', cursor: 'pointer', fontWeight: 'bold' }} onClick={onSwitch}>Đăng nhập</span></p>
@@ -206,14 +206,14 @@ function Main({ token, onLogout }) {
       </div>
 
       {selected && (
-        <ExamTake 
-          token={token} 
-          examId={selected} 
-          me={me} 
-          onClose={(gotoHistory) => { 
-            setSelected(null); 
-            if (gotoHistory === true) setView("history"); 
-          }} 
+        <ExamTake
+          token={token}
+          examId={selected}
+          me={me}
+          onClose={(gotoHistory) => {
+            setSelected(null);
+            if (gotoHistory === true) setView("history");
+          }}
         />
       )}
     </div>
