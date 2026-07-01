@@ -271,11 +271,14 @@ export function QuestionBankManager({ token }) {
   useEffect(() => { loadSubs(); }, []);
   useEffect(() => { if (selectedSub) loadQs(selectedSub); }, [selectedSub]);
 
-  // ✅ HÀM PARSE FIX LỖI SỐ 3: Cắt phần đáp án bị dính vào câu hỏi
   const parseWord = async (file) => {
     const arrayBuffer = await file.arrayBuffer();
     const result = await mammoth.extractRawText({ arrayBuffer });
-    const lines = result.value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    
+    // Tách các đáp án bị dính trên cùng 1 dòng (ví dụ " A. " hoặc " B) ") xuống dòng mới
+    let rawContent = result.value.replace(/\s+([A-D][\.\)]\s+)/g, '\n$1');
+
+    const lines = rawContent.split('\n').map(l => l.trim()).filter(l => l.length > 0);
     const parsed = []; let current = null;
 
     lines.forEach(line => {
@@ -283,11 +286,6 @@ export function QuestionBankManager({ token }) {
       if (line.match(/^(Câu\s*\d+:|Question\s*\d+:|^\d+\.)/i)) {
         if (current) parsed.push(current);
         let text = line.replace(/^(Câu\s*\d+:|Question\s*\d+:|^\d+\.)\s*/i, '');
-
-        // 🔥 Cắt bỏ phần đáp án bị dính vào câu hỏi (Ví dụ: " A. ")
-        const optionPos = text.search(/\s+[A-D][\.\)]/);
-        if (optionPos !== -1) { text = text.substring(0, optionPos).trim(); }
-
         current = { text, options: [] };
       }
       // 2. Nhận diện các Option A, B, C, D
