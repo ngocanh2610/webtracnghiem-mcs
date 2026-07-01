@@ -63,7 +63,7 @@ export function ExamStats({ token, examId, onClose }) {
   return (
     <div className="animate-fade-in">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2 style={{ margin: 0, fontSize: '20px' }}>📊 Thống kê kết quả đề thi</h2>
+        <h2 style={{ margin: 0, fontSize: '20px' }}>📊 Thống kê kết quả đề thi (Đã test CI/CD)</h2>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button className="btn-primary" style={{ background: '#10b981' }} onClick={handleExportExcel}>📥 Xuất Excel</button>
           {/* ✅ NÚT CHẤM LẠI HIỂN THỊ RÕ RÀNG Ở ĐÂY */}
