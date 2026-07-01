@@ -217,7 +217,7 @@ export function TeacherPanel({ token, me, refresh }) {
 
   return (
     <div className="card" style={{ padding: '20px' }}>
-      <h3>🚀 Soạn đề thi mới</h3>
+      <h3>🚀 Soạn đề thi mới (Test Auto Deploy CI/CD)</h3>
       <div style={{ display: 'flex', gap: '10px', marginBottom: '15px', alignItems: 'center' }}>
         <input className="login-input" style={{ flex: 2, margin: 0 }} placeholder="Tên đề thi" value={form.title || ""} onChange={e => setForm({ ...form, title: e.target.value })} />
         <select className="login-input" style={{ flex: 1, margin: 0 }} value={form.subject || ""} onChange={e => setForm({ ...form, subject: e.target.value })}>
